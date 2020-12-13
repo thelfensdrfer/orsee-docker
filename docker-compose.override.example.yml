@@ -7,3 +7,8 @@ services:
       MYSQL_DATABASE: "orsee"
       MYSQL_USER: "orsee"
       MYSQL_PASSWORD: "123456"
+    ports:
+      - 3306:3306
+  nginx:
+    ports:
+      - 80:8080
