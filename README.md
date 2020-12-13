@@ -11,3 +11,18 @@ To use `msmtp` instead of sendmail, set the path to msmtp `/usr/bin/msmtp` in th
 ### Data import
 
 On your first start set up the mysql database with the following command: `docker exec -i [orsee_database_1] mysql -u[orsee] -p[123456] orsee < orsee/install.sql`. Please check the variables in [brackets].
+
+### Email
+
+Config file `msmptrc` example file:
+
+```
+defaults
+logfile        ~/.msmtp.log
+
+account        wiwi
+host           smtp.wiwi.uni-wuppertal.de
+from           support@wiwi.uni-wuppertal.de
+
+account default : wiwi
+```
