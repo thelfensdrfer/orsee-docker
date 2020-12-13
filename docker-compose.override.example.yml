@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  database:
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_DATABASE: "orsee"
+      MYSQL_USER: "orsee"
+      MYSQL_PASSWORD: "123456"
