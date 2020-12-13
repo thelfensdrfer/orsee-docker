@@ -22,6 +22,8 @@ services:
   cron:
     build:
       context: ./cron
+    depends_on:
+      - database
     volumes:
       - orsee-data:/orsee
       - ./orsee/msmtprc:/root/.msmtprc:ro
