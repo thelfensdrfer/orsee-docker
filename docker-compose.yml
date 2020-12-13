@@ -2,24 +2,37 @@ version: "3"
 
 volumes:
   mysql-data:
+  orsee-data:
 
 services:
   database:
-    image: mysql:5.7
+    image: mysql:8.0
     volumes:
       - mysql-data:/var/lib/mysql
   app:
+    image: thelfensdrfer/orsee:latest
     build:
       context: ./orsee
     depends_on:
       - database
     volumes:
+      - orsee-data:/orsee
+      - ./orsee/msmtprc:/root/.msmtprc:ro
+      - ./orsee/settings.php:/orsee/config/settings.php:ro
+  cron:
+    build:
+      context: ./cron
+    volumes:
+      - orsee-data:/orsee
+      - ./orsee/msmtprc:/root/.msmtprc:ro
       - ./orsee/settings.php:/orsee/config/settings.php:ro
   nginx:
-    image: nginx
+    image: nginx:stable
     ports:
       - 80:8080
     depends_on:
       - app
     volumes:
-      - ./nginx:/etc/nginx/conf.d/
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/orsee.conf:/etc/nginx/conf.d/default.conf:ro
+      - orsee-data:/orsee

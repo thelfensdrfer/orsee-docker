@@ -8,10 +8,18 @@ RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
-        unzip curl \
+        unzip \
+        curl \
+        msmtp \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd
+    && docker-php-ext-install -j$(nproc) gd pdo_mysql
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 RUN curl $ORSEE_DOWNLOAD -L -o /orsee.zip \
     && unzip /orsee.zip -d /orsee \
     && mv /orsee/*/* /orsee/
+
+EXPOSE 9000
+
+CMD ["php-fpm"]
