@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:7.4-fpm
 
 MAINTAINER Tim Helfensdörfer <thelfensdrfer@gmail.com>
 
@@ -18,7 +18,8 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 RUN curl $ORSEE_DOWNLOAD -L -o /orsee.zip \
     && unzip /orsee.zip -d /orsee \
-    && mv /orsee/*/* /orsee/
+    && mv /orsee/*/* /orsee/ \
+    && rm /orsee.zip
 
 EXPOSE 9000
 
