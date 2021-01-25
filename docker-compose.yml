@@ -7,6 +7,8 @@ volumes:
 services:
   database:
     image: mysql:8.0
+    cap_add:
+      - SYS_NICE
     volumes:
       - mysql-data:/var/lib/mysql
   app:
@@ -17,7 +19,6 @@ services:
       - database
     volumes:
       - orsee-data:/orsee
-      - ./orsee/msmtprc:/root/.msmtprc:ro
       - ./orsee/settings.php:/orsee/config/settings.php:ro
   cron:
     build:
@@ -26,7 +27,6 @@ services:
       - database
     volumes:
       - orsee-data:/orsee
-      - ./orsee/msmtprc:/root/.msmtprc:ro
       - ./orsee/settings.php:/orsee/config/settings.php:ro
   nginx:
     image: nginx:stable

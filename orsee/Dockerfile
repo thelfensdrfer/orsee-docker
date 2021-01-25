@@ -21,6 +21,11 @@ RUN curl $ORSEE_DOWNLOAD -L -o /orsee.zip \
     && mv /orsee/*/* /orsee/ \
     && rm /orsee.zip
 
+ADD msmtprc /etc/msmtprc
+
+RUN chown root:msmtp /etc/msmtprc && \
+    chmod 640 /etc/msmtprc
+
 EXPOSE 9000
 
 CMD ["php-fpm"]
